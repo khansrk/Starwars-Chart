@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.bundle.min.js"></script>
+    <meta charset="UTF-8">
+    <title>My Starwars Chart</title>
+</head>
+<body>
+<div class = "container" style="width: 50%; margin:0 auto;">
+  <h3 id = "charttitle" style = "text-align:center;"></h3>
+    <canvas id="myChart" style="width: 600; height: 600;"></canvas>
+</div>
+<script>
+var labels = [];
+var mydata = [];
+$.getJSON("http://swapi.co/api/people/1/",function(json){
+  $.each(json,function(key,val){
+    if (key == "mass" || key == "height"){
+      labels.push(key);
+      mydata.push(val);
+    }
+    if (key == "films"){
+      labels.push(key);
+      mydata.push(val.length);
+    }
+    if (key == "species"){
+      labels.push(key);
+      mydata.push(val.length);
+    }
+    if (key == "vehicles"){
+      labels.push(key);
+      mydata.push(val.length);
+    }
+    if (key == "starships"){
+      labels.push(key);
+      mydata.push(val.length);
+    }
+    if (key == "name"){
+    $('<h3 />').text(val).appendTo("#charttitle");
+    }
+  });
+var ctx = document.getElementById("myChart");
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: labels,
+        datasets: [{
+            label: 'Star Wars Chart',
+            data: mydata,
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255,99,132,1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive:true
+    }
+});
+});
+
+</script>
+</body>
+</html>
